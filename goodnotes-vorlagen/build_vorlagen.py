@@ -32,127 +32,50 @@ FIRMA_ZEILEN = ["Ottostraße 4 · 26899 Rhede (Ems) · Tel. 04964 / 91 99 05-0",
                 "info@mb-middendorf.de · www.mb-middendorf.de"]
 
 # ----------------------------------------------------------------------
-# Gemeinsame Abschnitte (von allen Blättern genutzt)
+# Kundendaten (auf allen Blättern gleich)
 # ----------------------------------------------------------------------
-KUNDE = {"titel": "Auftraggeber & Baustelle", "rows": [
-    ("felder", [("Kunde", 1), ("Baustelle (falls abw.)", 1)]),
-    ("felder", [("Straße", 1), ("Ansprechpartner vor Ort", 1)]),
-    ("felder", [("PLZ / Ort", 1), ("Tel. vor Ort", 1)]),
-    ("felder", [("Telefon", 1), ("Angebot / Auftrag-Nr.", 1)]),
-    ("felder", [("E-Mail", 1), ("Aufgenommen von", 1)]),
+KUNDE = {"titel": "Kunde", "rows": [
+    ("felder", [("Name", 1), ("Telefon", 1)]),
+    ("felder", [("Straße", 1), ("E-Mail", 1)]),
+    ("felder", [("PLZ / Ort", 1), ("Baustelle (falls abw.)", 1)]),
 ]}
 
-OBERFLAECHE = ("kaestchen", "Oberfläche",
-               ["feuerverzinkt", "verzinkt + pulverbesch.", "pulverbeschichtet", "roh / grundiert"], "RAL")
-
-BAUSTELLE = {"titel": "Baustelle & Montage", "rows": [
-    ("kaestchen", "Zufahrt LKW", ["ja", "nein"], None),
-    ("kaestchen", "Hebezeug", ["Kran", "Hubsteiger", "von Hand", "Gerüst vorhanden"], None),
-    ("kaestchen", "Strom vor Ort", ["230 V", "400 V", "nein"], "Etage"),
-    ("felder", [("engster Durchgang cm", 1), ("Fotos (Anzahl)", 1), ("Montage bis / Zeitfenster", 1.4)]),
-    ("felder", [("Zugang / Schlüssel / Hinweise", 1)]),
-]}
-
-BEMERKUNGEN = {"titel": "Bemerkungen / Sonderwünsche", "rows": [("linien", 3)]}
-UNTERSCHRIFT = {"unterschrift": True}
-
 # ----------------------------------------------------------------------
-# Die Blätter
+# Die Blätter – "seiten": Liste aus ("abschnitte", [...]) oder ("skizze", "standard" | "tuer")
 # ----------------------------------------------------------------------
 BLAETTER = [
-    # ================================================================ GELÄNDER
     {
         "datei": "Aufmass_Gelaender",
         "titel": "AUFMASS GELÄNDER",
-        "seite1": [
-            KUNDE,
-            {"titel": "Bauteil", "rows": [
-                ("kaestchen", "Art", ["Treppengeländer", "Balkongeländer", "Brüstung / Absturzsicherung",
-                                      "Franz. Balkon", "Wandhandlauf", "Bühne / Podest"], "Sonstiges"),
-                ("kaestchen", "Verlauf", ["gerade", "mit Ecken (Winkel notieren)", "gewendelt / gebogen",
-                                          "Anschluss an Bestand"], None),
-                ("kaestchen", "Enden", ["Wandanschluss", "freistehend", "Endpfosten"], "Anzahl"),
-            ]},
-            {"titel": "Ausführung", "rows": [
-                ("kaestchen", "Material", ["Stahl", "Edelstahl V2A", "Edelstahl V4A", "Aluminium"], None),
-                OBERFLAECHE,
-                ("kaestchen", "Füllung", ["Stäbe senkrecht", "Querstäbe", "Lochblech", "Glas (VSG)",
-                                          "Streckmetall", "ohne"], None),
-                ("kaestchen", "Handlauf", ["Rundrohr", "Flachstahl", "Edelstahl", "Holz", "beidseitig"], "Ø mm"),
-            ]},
-            {"titel": "Einbausituation", "rows": [
-                ("kaestchen", "Untergrund", ["Beton", "Mauerwerk", "Holz", "Stahl", "Naturstein / Fliese",
-                                             "WDVS"], "Dämmung cm"),
-                ("kaestchen", "Befestigung", ["aufgesetzt (Draufsicht)", "seitlich / stirnseitig",
-                                              "Ankerplatte", "einbetoniert", "angeschweißt"], None),
-                ("kaestchen", "Bezugshöhe", ["OK Fertigfußboden", "Rohbau"], "fehlender Aufbau cm"),
-                ("kaestchen", "Prüfen", ["Leitungen im Bohrbereich", "Abdichtung", "Statik",
-                                         "Lot / Waage (Toleranzen)", "Gefälle"], None),
-            ]},
-            {"titel": "Absturzsicherung", "rows": [
-                ("felder", [("Absturzhöhe m", 1), ("Geländerhöhe cm", 1), ("Pfostenabstand cm", 1)]),
-                ("kaestchen", "Nutzung", ["privat", "gewerblich / Arbeitsstätte", "öffentlich"], None),
-                ("kaestchen", "Kinder", ["zu erwarten", "nicht zu erwarten"], None),
-                ("felder", [("Treppe: Steigung", 1), ("Auftritt", 1), ("Laufbreite", 1)]),
-                ("hinweis", "Richtwerte, gegen LBO / ASR / DIN 18065 prüfen: Höhe i. d. R. mind. 90 cm, "
-                            "ab 12 m Absturzhöhe mind. 110 cm · Öffnungen max. 12 cm · kein Leitereffekt bei Kindern."),
-            ]},
+        "seiten": [
+            ("abschnitte", [
+                KUNDE,
+                {"titel": "Füllung", "rows": [
+                    ("kaestchen", "", ["Stäbe senkrecht", "Querstäbe", "Lochblech", "Glas (VSG)",
+                                       "Streckmetall"], "Sonstiges"),
+                ]},
+                {"titel": "Maße", "tabelle": {"zeilen": 18, "spalten": [
+                    ("Pos.", 12), ("Abschnitt / Lage", 62), ("Länge", 26), ("Höhe", 26), ("Bemerkung", 0)]}},
+            ]),
+            ("skizze", "standard"),
         ],
-        "seite2": [
-            BAUSTELLE,
-            {"titel": "Maße", "tabelle": {"zeilen": 13, "spalten": [
-                ("Pos.", 11), ("Abschnitt / Lage", 50), ("Länge", 21), ("Höhe", 21),
-                ("Absturzh.", 21), ("Ecke °", 17), ("Bemerkung", 0)]}},
-            BEMERKUNGEN, UNTERSCHRIFT,
-        ],
-        "skizze": "standard",
     },
-    # ================================================================ TÜREN
     {
         "datei": "Aufmass_Tueren",
         "titel": "AUFMASS TÜREN",
-        "seite1": [
-            KUNDE,
-            {"titel": "Türart", "rows": [
-                ("kaestchen", "Art", ["Stahltür innen", "Außentür / Haustür", "Nebeneingang", "Schiebetür",
-                                      "Gittertür"], "Sonstiges"),
-                ("kaestchen", "Flügel", ["1-flügelig", "2-flügelig (Gang-/Standflügel)", "Oberlicht",
-                                         "Seitenteil"], None),
-                ("kaestchen", "Öffnung", ["DIN links", "DIN rechts", "nach innen", "nach außen"], None),
-                ("hinweis", "DIN-Richtung: Blick auf die Seite, auf der die Bänder sichtbar sind – "
-                            "Bänder links = DIN links."),
-            ]},
-            {"titel": "Anforderungen", "rows": [
-                ("kaestchen", "Brandschutz", ["keiner", "T30 / EI2 30", "T90 / EI2 90", "Rauchschutz RS"], None),
-                ("kaestchen", "Weitere", ["Einbruchschutz RC2", "RC3", "Wärmedämmung", "Schallschutz",
-                                          "barrierefrei"], None),
-                ("kaestchen", "Fluchtweg", ["nein", "Notausgang EN 179", "Panik EN 1125"], None),
-            ]},
-            {"titel": "Zarge & Einbau", "rows": [
-                ("kaestchen", "Zarge", ["Eckzarge", "Umfassungszarge", "Blockzarge", "Bestand bleibt"], None),
-                ("kaestchen", "Wand", ["Mauerwerk", "Beton", "Trockenbau", "Stahl", "WDVS"], "Ständer / Dämm. mm"),
-                ("kaestchen", "Befestigung", ["Dübel", "Maueranker", "einmörteln", "verschweißen"], None),
-                ("kaestchen", "Boden", ["Schwelle", "absenkbare Dichtung", "schwellenlos", "Fertigfußboden fehlt"],
-                 "Aufbau cm"),
-            ]},
-            {"titel": "Beschläge & Ausstattung", "rows": [
-                ("kaestchen", "Drücker", ["Drücker / Drücker", "Knauf / Drücker", "Stoßgriff"], None),
-                ("kaestchen", "Schloss", ["Profilzylinder", "Schließanlage", "Mehrfachverriegelung",
-                                          "E-Öffner"], "Zyl.-Länge"),
-                ("kaestchen", "Schließer", ["Obentürschließer", "Feststellanlage", "Schließfolgeregelung"], None),
-                ("kaestchen", "Extras", ["Glasausschnitt", "Lüftungsgitter", "Kabelübergang", "Zutrittskontrolle"],
-                 None),
-                OBERFLAECHE,
-            ]},
+        "seiten": [
+            ("abschnitte", [
+                KUNDE,
+                {"titel": "Füllung & Öffnung", "rows": [
+                    ("kaestchen", "Füllung", ["Blech glatt", "Glas", "Lochblech", "Stäbe"], "Sonstiges"),
+                    ("kaestchen", "Öffnung", ["DIN links", "DIN rechts", "nach innen", "nach außen"], None),
+                ]},
+                {"titel": "Maße", "tabelle": {"zeilen": 16, "spalten": [
+                    ("Pos.", 12), ("Raum / Lage", 56), ("Breite", 26), ("Höhe", 26), ("Wand", 22),
+                    ("Bemerkung", 0)]}},
+            ]),
+            ("skizze", "standard"),
         ],
-        "seite2": [
-            BAUSTELLE,
-            {"titel": "Maße  (lichte Wandöffnung, siehe Skizze)", "tabelle": {"zeilen": 12, "spalten": [
-                ("Pos.", 11), ("Raum / Lage", 38), ("B oben", 17), ("B Mitte", 17), ("B unten", 17),
-                ("H links", 17), ("H rechts", 17), ("Wand", 15), ("DIN", 0)]}},
-            BEMERKUNGEN, UNTERSCHRIFT,
-        ],
-        "skizze": "tuer",
     },
 ]
 
@@ -269,7 +192,7 @@ class Seite:
             _, label, items, rest = row
             if zeichnen:
                 self.text(x0, y + 0.3 * mm, label, 8, True)
-            xs = x0 + LABEL_W
+            xs = x0 + LABEL_W if label else x0
             x, yy, h = xs, y, LH
             for it in items:
                 bw = BOX + 1.5 * mm + self.w(it)
@@ -468,12 +391,13 @@ class Seite:
 
 
 def seiten_fuer(blatt):
-    return [("abschnitte", blatt["seite1"]), ("abschnitte", blatt["seite2"]), ("skizze", blatt["skizze"])]
+    return blatt["seiten"]
 
 
 def zeichne(c, blatt, nr, seite, gesamt):
     # Abschnittsnummern laufen über die Seiten weiter
-    start = sum(1 for a in blatt["seite1"] if not a.get("unterschrift")) if nr == 2 else 0
+    start = sum(1 for art, inh in blatt["seiten"][:nr - 1] if art == "abschnitte"
+                for a in inh if not a.get("unterschrift"))
     s = Seite(c, blatt, nr, gesamt, start)
     s.kopf()
     art, inhalt = seite
